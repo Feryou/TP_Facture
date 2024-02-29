@@ -35,7 +35,7 @@ class ResultatActivity : ComponentActivity() {
 
 @Composable
 fun ResultatScreen(montantTTC: String) {
-    val context = LocalContext.current // Obtenez le contexte actuel ici
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -47,7 +47,6 @@ fun ResultatScreen(montantTTC: String) {
         Spacer(modifier = Modifier.height(32.dp))
         Button(
             onClick = {
-                // Utilisez le contexte obtenu pour démarrer l'activité
                 context.startActivity(Intent(context, FactureActivity::class.java))
             },
             modifier = Modifier.align(Alignment.CenterHorizontally)

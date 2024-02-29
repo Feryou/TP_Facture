@@ -22,7 +22,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             KhelifiDacheuxFactureTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -76,8 +75,6 @@ fun LoginScreen(onLoginSuccess: () -> Unit) {
 @Composable
 fun DefaultPreview() {
     KhelifiDacheuxFactureTheme {
-        // Dans une prévisualisation, onLoginSuccess ne peut pas démarrer une activité.
-        // Afficher un message de débogage ou laisser vide pour la prévisualisation.
-        LoginScreen(onLoginSuccess = { /* Debug message or leave empty for preview */ })
+        LoginScreen(onLoginSuccess = { /* Message de debug si besoin */ })
     }
 }

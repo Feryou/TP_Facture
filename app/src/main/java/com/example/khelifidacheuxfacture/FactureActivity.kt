@@ -31,7 +31,6 @@ fun FactureForm() {
     var estFidele by remember { mutableStateOf(false) }
     var remise by remember { mutableStateOf("") }
 
-    // Mise à jour du montant HT chaque fois que la quantité ou le prix unitaire change
     val quantiteNum = quantite.toDoubleOrNull() ?: 0.0
     val prixUnitaireNum = prixUnitaire.toDoubleOrNull() ?: 0.0
     montantHT = (quantiteNum * prixUnitaireNum).toString()
@@ -43,7 +42,6 @@ fun FactureForm() {
             value = quantite,
             onValueChange = {
                 quantite = it
-                // Recalcul du montant HT si quantite est un nombre valide
                 val quantNum = it.toDoubleOrNull() ?: 0.0
                 montantHT = (quantNum * prixUnitaireNum).toString()
             },
@@ -55,7 +53,6 @@ fun FactureForm() {
             value = prixUnitaire,
             onValueChange = {
                 prixUnitaire = it
-                // Recalcul du montant HT si prixUnitaire est un nombre valide
                 val prixUnitNum = it.toDoubleOrNull() ?: 0.0
                 montantHT = (quantiteNum * prixUnitNum).toString()
             },
@@ -68,7 +65,7 @@ fun FactureForm() {
             onValueChange = { montantHT = it },
             label = { Text("Montant HT") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            readOnly = true // Rend le champ de saisie en lecture seule
+            readOnly = true
         )
 
         OutlinedTextField(value = tauxTVA, onValueChange = { tauxTVA = it }, label = { Text("Taux TVA") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
@@ -82,17 +79,14 @@ fun FactureForm() {
         val context = LocalContext.current
 
         Button(onClick = {
-            // Assurez-vous que les champs sont convertis en nombres correctement.
             val quantiteNum = quantite.toDoubleOrNull() ?: 0.0
             val prixUnitaireNum = prixUnitaire.toDoubleOrNull() ?: 0.0
             val montantHTNum = montantHT.toDoubleOrNull() ?: 0.0
             val tauxTVANum = tauxTVA.toDoubleOrNull() ?: 0.0
             val remiseNum = if (estFidele) remise.toDoubleOrNull() ?: 0.0 else 0.0
 
-            // Calcul du montant TTC
             val montantTTC = (montantHTNum + (montantHTNum * tauxTVANum / 100)) * (1 - remiseNum / 100)
 
-            // Naviguer vers ResultatActivity avec le montant TTC
             val intent = android.content.Intent(context, ResultatActivity::class.java)
             intent.putExtra("montantTTC", montantTTC.toString())
             context.startActivity(intent)
@@ -101,7 +95,6 @@ fun FactureForm() {
         }
 
         Button(onClick = {
-            // Réinitialiser le formulaire
             quantite = ""
             prixUnitaire = ""
             montantHT = ""
